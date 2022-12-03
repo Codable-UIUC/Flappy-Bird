@@ -39,7 +39,7 @@ def gamescreen():
                 if playery > 0:
                     playerVelY = playerFlapVel
                     playerFlapped = True
-                    audio['wing'].play()
+                    # play flap audio
 
         # collision logic
 
@@ -50,7 +50,7 @@ def gamescreen():
 
         if playerFlapped:
             playerFlapped = False            
-        playerHeight = sprites['player'].get_height()
+        playerHeight = 0 # <----- replace with height of player sprite
         playery += min(playerVelY, groundY - playery - playerHeight)
 
         # move pipes 
