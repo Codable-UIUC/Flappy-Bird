@@ -4,15 +4,15 @@ from pygame.locals import *
 
 width = 289
 height = 511
+framepersecond = 32
 screen = pygame.display.set_mode((width, height))
 background = pygame.transform.scale(pygame.image.load("background.jpeg"), (width, height))
 play_button = pygame.transform.scale(pygame.image.load("buttons/play.png"), (150, 70))
 option_button = pygame.transform.scale(pygame.image.load("buttons/options.png"), (100, 60))
 quit_button = pygame.transform.scale(pygame.image.load("buttons/icon_x.png"), (57, 57))
+player = pygame.transform.scale(pygame.image.load("player.png"), (32, 32)) # <-- placeholder
 
 groundY = height * 0.9
-sprites = {}
-audio = {}
 
 def homescreen():
     while True:
@@ -36,11 +36,14 @@ def homescreen():
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if mouse_pos[0] in range(70, 220) and mouse_pos[1] in range(360, 430):
-                    gamescreen()
-                if mouse_pos[0] in range(40, 140) and mouse_pos[1] in range(400, 460):
-                    optionscreen()
-                if mouse_pos[0] in range(190, 247) and mouse_pos[1] in range(403, 460):
+                if mouse_pos[0] in range(70, 220) and mouse_pos[1] in range(300, 370):
+                    # game start
+                    return
+                if mouse_pos[0] in range(40, 110) and mouse_pos[1] in range(400, 470):
+                    # options
+                    pass
+                if mouse_pos[0] in range(160, 260) and mouse_pos[1] in range(403, 463):
+                    # exit
                     pygame.quit()
                     sys.exit()
 
@@ -57,11 +60,10 @@ def gamescreen():
     score = 0
     playerx = int(width/5)
     playery = int (height/2)
-    basex = 0
     playerVelY = -9
     playerMaxVel = 10  
-    playerMinVelY = -8
     playerAccY = 1
+
     # generate pipes
 
     playerFlapVel = -8 
@@ -73,7 +75,7 @@ def gamescreen():
                 pygame.quit()
                 sys.exit()
 
-            if event.type == KEYDOWN and (event.key == K_SPACE or event.key == K_SPACE):
+            if event.type == pygame.MOUSEBUTTONUP:
                 if playery > 0:
                     playerVelY = playerFlapVel
                     playerFlapped = True
@@ -88,7 +90,7 @@ def gamescreen():
 
         if playerFlapped:
             playerFlapped = False            
-        playerHeight = 0 # <----- replace with height of player sprite
+        playerHeight = 32
         playery += min(playerVelY, groundY - playery - playerHeight)
 
         # move pipes 
@@ -98,7 +100,10 @@ def gamescreen():
         # remove out of screen pipe
 
         # render sprites
+        screen.blit(background, (0,0))
+        screen.blit(player, (playerx,playery))
         pygame.display.update()
+        framepersecond_clock.tick(framepersecond)
 
 def isCollide(playerx, playery, upperPipes, lowerPipes):
     # collision logic
@@ -124,13 +129,10 @@ def gameOver():
 if __name__ == "__main__":
 
     pygame.init() 
+    framepersecond_clock = pygame.time.Clock()
     pygame.display.set_caption('Flappy Bird') 
-
-    # load sprites and add to list
-    # load audio and add to list
 
     while True:
         homescreen() 
         gamescreen()
 
-homescreen()
