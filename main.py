@@ -5,13 +5,50 @@ from pygame.locals import *
 width = 289
 height = 511
 screen = pygame.display.set_mode((width, height))
+background = pygame.transform.scale(pygame.image.load("background.jpeg"), (width, height))
+play_button = pygame.transform.scale(pygame.image.load("play button.png"), (150, 70))
+option_button = pygame.transform.scale(pygame.image.load("OptionButton.png"), (70, 70))
+quit_button = pygame.transform.scale(pygame.image.load("quit.png"), (100, 60))
+
 groundY = height * 0.9
 sprites = {}
 audio = {}
 
 def homescreen():
-    # home screen logic (play button)
+    while True:
+        screen.blit(background, (0,0))
+        mouse_pos = pygame.mouse.get_pos()
+
+        title = pygame.font.Font('freesansbold.ttf', 45).render('Flappy Bird', True, (255, 255, 255))
+        screen.blit(title, (15,100))
+
+        # start button
+        screen.blit(play_button, (70, 300))
+
+        # option button
+        screen.blit(option_button, (40, 400))
+
+        # quit button
+        screen.blit(quit_button, (160, 403))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if mouse_pos[0] in range(87, 237) and mouse_pos in range(360, 430):
+                    gamescreen()
+                if mouse_pos[0] in range(40, 110) and mouse_pos in range(400, 470):
+                if mouse_pos[0] in range(160, 260) and mouse_pos in range(403, 463):
+                    pygame.quit()
+                    sys.exit()
+
+        pygame.display.update()
+
+
+def optionscreen():
     pass
+
 
 def gamescreen():
     
@@ -94,3 +131,5 @@ if __name__ == "__main__":
     while True:
         homescreen() 
         gamescreen()
+
+homescreen()
