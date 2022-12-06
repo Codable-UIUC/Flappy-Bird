@@ -6,9 +6,9 @@ width = 289
 height = 511
 screen = pygame.display.set_mode((width, height))
 background = pygame.transform.scale(pygame.image.load("background.jpeg"), (width, height))
-play_button = pygame.transform.scale(pygame.image.load("play button.png"), (150, 70))
-option_button = pygame.transform.scale(pygame.image.load("OptionButton.png"), (70, 70))
-quit_button = pygame.transform.scale(pygame.image.load("quit.png"), (100, 60))
+play_button = pygame.transform.scale(pygame.image.load("buttons/play.png"), (150, 70))
+option_button = pygame.transform.scale(pygame.image.load("buttons/options.png"), (100, 60))
+quit_button = pygame.transform.scale(pygame.image.load("buttons/icon_x.png"), (57, 57))
 
 groundY = height * 0.9
 sprites = {}
@@ -29,17 +29,18 @@ def homescreen():
         screen.blit(option_button, (40, 400))
 
         # quit button
-        screen.blit(quit_button, (160, 403))
+        screen.blit(quit_button, (190, 403))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if mouse_pos[0] in range(87, 237) and mouse_pos in range(360, 430):
+                if mouse_pos[0] in range(70, 220) and mouse_pos[1] in range(360, 430):
                     gamescreen()
-                if mouse_pos[0] in range(40, 110) and mouse_pos in range(400, 470):
-                if mouse_pos[0] in range(160, 260) and mouse_pos in range(403, 463):
+                if mouse_pos[0] in range(40, 140) and mouse_pos[1] in range(400, 460):
+                    optionscreen()
+                if mouse_pos[0] in range(190, 247) and mouse_pos[1] in range(403, 460):
                     pygame.quit()
                     sys.exit()
 
