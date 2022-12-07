@@ -142,13 +142,53 @@ def optionscreen():
 
 
 def creditscreen():
+    y = 0
+    credit_font = pygame.font.Font('freesansbold.ttf', 25)
+    clock = pygame.time.Clock()
+    name1 = credit_font.render("Minjae Rhee", True, (255, 255, 0))
+    name2 = credit_font.render("Michael Bhang", True, (255, 255, 0))
+    name3 = credit_font.render("Jehyeok Yeon", True, (255, 255, 0))
+    name4 = credit_font.render("Sanghyuk Seo", True, (255, 255, 0))
+    name5 = credit_font.render("Emily Shin", True, (255, 255, 0))
+    name6 = credit_font.render("Hyerim Oh", True, (255, 255, 0))
+    name7 = credit_font.render("Donghyeon Jeong", True, (255, 255, 0))
     while True:
         mouse_pos = pygame.mouse.get_pos()
         screen.blit(background, (0, 0))
         screen.blit(exit_button, (5,5))
 
-        credits_text = pygame.font.Font('freesansbold.ttf', 15).render("Shin Yoon Hyung's Homework", True, (255, 255, 255))
-        screen.blit(credits_text, (20, 55))
+        credit_rect1 = name1.get_rect()
+        credit_rect1.center = (144, (-60+y))
+        credit_rect2 = name2.get_rect()
+        credit_rect2.center = (144, (-120+y))
+        credit_rect3 = name3.get_rect()
+        credit_rect3.center = (144, (-180+y))
+        credit_rect4 = name4.get_rect()
+        credit_rect4.center = (144, (-240+y))
+        credit_rect5 = name5.get_rect()
+        credit_rect5.center = (144, (-300+y))
+        credit_rect6 = name6.get_rect()
+        credit_rect6.center = (144, (-360+y))
+        credit_rect7 = name7.get_rect()
+        credit_rect7.center = (144, -420+y)
+
+        screen.blit(name1, credit_rect1)
+        screen.blit(name2, credit_rect2)
+        screen.blit(name3, credit_rect3)
+        screen.blit(name4, credit_rect4)
+        screen.blit(name5, credit_rect5)
+        screen.blit(name6, credit_rect6)
+        screen.blit(name7, credit_rect7)
+
+        
+        # credits_text = pygame.font.Font('freesansbold.ttf', 15).render("Donghyeon Jeong, Jehyeok Yeon, ", True, (255, 255, 255))
+        # screen.blit(credits_text, (20, 55+y))
+        # credits_text_2 = pygame.font.Font('freesansbold.ttf', 15).render("Minjae Rhee, Michael Bhang", True, (255, 255, 255))
+        # screen.blit(credits_text_2, (20, 85+y))
+        # credits_text_3 = pygame.font.Font('freesansbold.ttf', 15).render("Hyerim Oh, Sanghyuk Seo", True, (255, 255, 255))
+        # screen.blit(credits_text_3, (20, 115+y))
+        # credits_text_4 = pygame.font.Font('freesansbold.ttf', 15).render("Emily Shin", True, (255, 255, 255))
+        # screen.blit(credits_text_4, (20, 145+y))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -158,7 +198,10 @@ def creditscreen():
                 if mouse_pos[0] in range(5, 50) and mouse_pos[1] in range(5, 50):
                     return
 
+
         pygame.display.update()
+        y += 1
+        pygame.time.wait(10)
 
 
 def gamescreen():
@@ -265,7 +308,7 @@ def gamescreen():
 
         if playerVelY == 0:
             audio['die'].play()
-            
+
         playerHeight = 32
         playery += min(playerVelY, groundY - playery - playerHeight)
 
