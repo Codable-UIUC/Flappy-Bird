@@ -17,6 +17,8 @@ play_button = pygame.transform.scale(pygame.image.load("buttons/play.png"), (150
 option_button = pygame.transform.scale(pygame.image.load("buttons/options.png"), (120, 60))
 quit_button = pygame.transform.scale(pygame.image.load("buttons/exit.png"), (120, 60))
 home_button = pygame.transform.scale(pygame.image.load("buttons/icon_home.png"), (45, 45))
+info_buttom = pygame.transform.scale(pygame.image.load("buttons/icon_info.png"), (45, 45))
+exit_button = pygame.transform.scale(pygame.image.load("buttons/icon_x.png"), (45, 45))
 
 # Options
 play_bgm = True
@@ -107,9 +109,13 @@ def optionscreen():
             screen.blit(on_text_off, (130, 270))
             screen.blit(off_text_on, (200, 270))
 
-
         # Back Button
         screen.blit(home_button, (5, 5))
+
+        # Credits Button
+        credits_text = pygame.font.Font('freesansbold.ttf', 30).render('Credits', True, (255, 255, 255))
+        screen.blit(credits_text, (30, 460))
+        screen.blit(info_buttom, (170, 453))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -128,10 +134,28 @@ def optionscreen():
                     play_sfx = True
                 if mouse_pos[0] in range(200, 260) and mouse_pos[1] in range(270, 300):
                     play_sfx = False
+                if mouse_pos[0] in range(170, 215) and mouse_pos[1] in range(453, 498):
+                    creditscreen()
 
 
         pygame.display.update()
 
+
+def creditscreen():
+    while True:
+        mouse_pos = pygame.mouse.get_pos()
+        screen.blit(background, (0, 0))
+        screen.blit(exit_button, (5,5))
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if mouse_pos[0] in range(5, 50) and mouse_pos[1] in range(5, 50):
+                    return
+
+        pygame.display.update()
 
 
 def gamescreen():
