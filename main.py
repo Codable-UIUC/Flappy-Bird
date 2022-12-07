@@ -306,9 +306,6 @@ def gamescreen():
             playerFlapped = False        
 
 
-        if playerVelY == 0:
-            audio['die'].play()
-
         playerHeight = 32
         playery += min(playerVelY, groundY - playery - playerHeight)
 
