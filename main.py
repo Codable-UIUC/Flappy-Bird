@@ -189,9 +189,15 @@ def gamescreen():
         {'x': width+200, 'y':newPipe1[1]['y']},
         {'x': width+200+(width/2), 'y':newPipe2[1]['y']},
     ]
-    
+
+    myFont = pygame.font.SysFont("arial", 20, True, True)
+    score_title = myFont.render("Score:", True, (255, 255, 255))
+    score_rect = score_title.get_rect()
+    score_rect.x, score_rect.y = 100, 10
+
     playerFlapVel = -8 
     playerFlapped = False
+    score_up = True
 
     while True:
         for event in pygame.event.get():
@@ -204,12 +210,28 @@ def gamescreen():
                     playerVelY = playerFlapVel
                     playerFlapped = True
                     # play flap audio
+                    audio['wing'].play()
 
         # collision logic
         crashTest = isCollide(playerx, playery, upperPipes, lowerPipes) 
         if crashTest:
             return
+
         # score logic
+        player_x = playerx + sprites['player'].get_width()
+        pipe_x = lowerPipes[0]['x'] + sprites['pipe'][0].get_width()
+        
+        if pipe_x > player_x:
+            score_up = True
+        elif pipe_x < player_x and score_up:
+            score += 1
+            audio['point'].play()
+            score_up = False
+        
+        # score rendering
+        score_title2 = myFont.render(str((score)), True, (255, 255, 255))
+        score_rect2 = score_title2.get_rect()
+        score_rect2.x, score_rect2.y  = 170, 10
 
         if playerVelY < playerMaxVel and not playerFlapped:
             playerVelY += playerAccY
@@ -235,7 +257,6 @@ def gamescreen():
             upperPipes.pop(0)
             lowerPipes.pop(0)
  
- 
          # Lets blit our sprites now
         screen.blit(sprites['background'], (0, 0))
         for upperPipe, lowerPipe in zip(upperPipes, lowerPipes):
@@ -244,24 +265,27 @@ def gamescreen():
 
         screen.blit(sprites['base'], (basex, groundY))
         screen.blit(sprites['player'], (playerx, playery))
+
+        screen.blit(score_title, score_rect)
+        screen.blit(score_title2, score_rect2)
+
         pygame.display.update()
         framepersecond_clock.tick(framepersecond)
+
+        
 
 def isCollide(playerx, playery, upperPipes, lowerPipes):
     # collision logic
     if playery> groundY - 25  or playery<0:
-        #audio['hit'].play()
         return True
     
     for pipe in upperPipes:
         pipeHeight = sprites['pipe'][0].get_height()
-        if(playery < pipeHeight + pipe['y'] and abs(playerx - pipe['x']) < sprites['pipe'][0].get_width()):
-        #    audio['hit'].play()
+        if (playery < pipeHeight + pipe['y'] and abs(playerx - pipe['x']) < sprites['pipe'][0].get_width()):
             return True
 
     for pipe in lowerPipes:
         if (playery + sprites['player'].get_height() > pipe['y']) and abs(playerx - pipe['x']) < sprites['pipe'][0].get_width():
-        #    audio['hit'].play()
             return True
 
     return False
@@ -310,7 +334,8 @@ if __name__ == "__main__":
     audio['wing'] = pygame.mixer.Sound('gallery/audio/wing.wav')
 
     sprites['background'] = pygame.image.load('gallery/sprites/background.jpeg').convert()
-    sprites['player'] = pygame.image.load('gallery/sprites/player.png').convert_alpha()
+    bird_img = pygame.image.load('gallery/sprites/birdy.png')
+    sprites['player'] = pygame.transform.scale(bird_img, (30, 21)).convert_alpha()
     
     while True:
         homescreen() 
