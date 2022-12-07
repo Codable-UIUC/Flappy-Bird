@@ -147,6 +147,9 @@ def creditscreen():
         screen.blit(background, (0, 0))
         screen.blit(exit_button, (5,5))
 
+        credits_text = pygame.font.Font('freesansbold.ttf', 15).render("Shin Yoon Hyung's Homework", True, (255, 255, 255))
+        screen.blit(credits_text, (20, 55))
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
