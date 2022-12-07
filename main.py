@@ -282,12 +282,12 @@ def isCollide(playerx, playery, upperPipes, lowerPipes):
     
     for pipe in upperPipes:
         pipeHeight = sprites['pipe'][0].get_height()
-        if (playery < pipeHeight + pipe['y'] and abs(playerx - pipe['x']) < sprites['pipe'][0].get_width()):
+        if (playery < pipeHeight + pipe['y'] and abs(playerx - pipe['x'])+20 < sprites['pipe'][0].get_width()):
             audio['hit'].play()
             return True
 
     for pipe in lowerPipes:
-        if (playery + sprites['player'].get_height() > pipe['y']) and abs(playerx - pipe['x']) < sprites['pipe'][0].get_width():
+        if (playery + sprites['player'].get_height() > pipe['y']) and abs(playerx - pipe['x'])+20 < sprites['pipe'][0].get_width():
             audio['hit'].play()
             return True
 
