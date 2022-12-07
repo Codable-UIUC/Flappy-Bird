@@ -19,7 +19,7 @@ quit_button = pygame.transform.scale(pygame.image.load("buttons/exit.png"), (150
 home_button = pygame.transform.scale(pygame.image.load("buttons/icon_home.png"), (45, 45))
 info_buttom = pygame.transform.scale(pygame.image.load("buttons/icon_info.png"), (45, 45))
 exit_button = pygame.transform.scale(pygame.image.load("buttons/icon_x.png"), (45, 45))
-title = pygame.transform.scale(pygame.image.load("gallery/sprites/flappy-bird-title.png"), (270, 60))
+title = pygame.transform.scale(pygame.image.load("gallery/sprites/flappy-bird.png"), (270, 80))
 
 # Options
 play_bgm = True
@@ -173,6 +173,7 @@ def gamescreen():
     playerMaxVel = 10  
     playerMinVelY = -8
     playerAccY = 1
+    font_gameover = pygame.font.Font('freesansbold.ttf', 30)
 
     # generate pipes
     newPipe1 = getRandomPipe()
@@ -213,9 +214,31 @@ def gamescreen():
                     audio['wing'].play()
 
         # collision logic
-        crashTest = isCollide(playerx, playery, upperPipes, lowerPipes) 
-        if crashTest:
-            return
+        crashTest = isCollide(playerx, playery, upperPipes, lowerPipes)
+
+        # game over
+        while crashTest:
+            gameover_text1 = font_gameover.render("GAME OVER :(", False, (255, 255, 255))
+            gameover_rect1 = gameover_text1.get_rect()
+            gameover_rect1.center = (144, 120) 
+
+            gameover_text2 = font_gameover.render("Your Score: "+str((score))+"", False, (255, 255, 255))
+            gameover_rect2 = gameover_text2.get_rect()
+            gameover_rect2.center = (144, 170)
+
+            gameover_text3 = font_gameover.render("Press ESC to Quit", False, (255, 255, 255))
+            gameover_rect3 = gameover_text3.get_rect()
+            gameover_rect3.center = (144, 220)
+
+            screen.blit(gameover_text1, gameover_rect1)
+            screen.blit(gameover_text2, gameover_rect2)
+            screen.blit(gameover_text3, gameover_rect3)
+            pygame.display.update()
+            for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            return
+            
 
         # score logic
         player_x = playerx + sprites['player'].get_width()
@@ -237,7 +260,9 @@ def gamescreen():
             playerVelY += playerAccY
 
         if playerFlapped:
-            playerFlapped = False            
+            playerFlapped = False        
+
+
         playerHeight = 32
         playery += min(playerVelY, groundY - playery - playerHeight)
 
