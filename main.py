@@ -13,12 +13,13 @@ pygame.init()
 # Screen and buttons
 screen = pygame.display.set_mode((width, height))
 background = pygame.transform.scale(pygame.image.load("gallery/sprites/background.jpeg"), (width, height))
-play_button = pygame.transform.scale(pygame.image.load("buttons/play.png"), (150, 70))
-option_button = pygame.transform.scale(pygame.image.load("buttons/options.png"), (120, 60))
-quit_button = pygame.transform.scale(pygame.image.load("buttons/exit.png"), (120, 60))
+play_button = pygame.transform.scale(pygame.image.load("buttons/play.png"), (150, 60))
+option_button = pygame.transform.scale(pygame.image.load("buttons/options.png"), (150, 60))
+quit_button = pygame.transform.scale(pygame.image.load("buttons/exit.png"), (150, 60))
 home_button = pygame.transform.scale(pygame.image.load("buttons/icon_home.png"), (45, 45))
 info_buttom = pygame.transform.scale(pygame.image.load("buttons/icon_info.png"), (45, 45))
 exit_button = pygame.transform.scale(pygame.image.load("buttons/icon_x.png"), (45, 45))
+title = pygame.transform.scale(pygame.image.load("gallery/sprites/flappy-bird-title.png"), (270, 60))
 
 # Options
 play_bgm = True
@@ -38,30 +39,29 @@ def homescreen():
         screen.blit(background, (0,0))
         mouse_pos = pygame.mouse.get_pos()
 
-        title = pygame.font.Font('freesansbold.ttf', 45).render('Flappy Bird', True, (255, 255, 255))
-        screen.blit(title, (15,100))
+        screen.blit(title, (8,100))
 
         # start button
-        screen.blit(play_button, (70, 300))
+        screen.blit(play_button, (70, 240))
 
         # option button
-        screen.blit(option_button, (15, 400))
+        screen.blit(option_button, (70, 315))
 
         # quit button
-        screen.blit(quit_button, (155, 400))
+        screen.blit(quit_button, (70, 390))
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                if mouse_pos[0] in range(70, 220) and mouse_pos[1] in range(300, 370):
+                if mouse_pos[0] in range(70, 220) and mouse_pos[1] in range(240, 300):
                     # game start
                     return
-                if mouse_pos[0] in range(15, 135) and mouse_pos[1] in range(400, 460):
+                if mouse_pos[0] in range(70, 220) and mouse_pos[1] in range(315, 375):
                     # options
                     optionscreen()
-                if mouse_pos[0] in range(155, 275) and mouse_pos[1] in range(400, 460):
+                if mouse_pos[0] in range(70, 220) and mouse_pos[1] in range(390, 450):
                     # exit
                     pygame.quit()
                     sys.exit()
@@ -339,6 +339,7 @@ if __name__ == "__main__":
     sprites['background'] = pygame.image.load('gallery/sprites/background.jpeg').convert()
     bird_img = pygame.image.load('gallery/sprites/birdy.png')
     sprites['player'] = pygame.transform.scale(bird_img, (30, 21)).convert_alpha()
+    sprites['main'] = pygame.image.load('gallery/sprites/flappy-bird.png')
     
     while True:
         homescreen() 
