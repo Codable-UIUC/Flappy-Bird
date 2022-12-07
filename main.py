@@ -339,7 +339,7 @@ if __name__ == "__main__":
     sprites['background'] = pygame.image.load('gallery/sprites/background.jpeg').convert()
     bird_img = pygame.image.load('gallery/sprites/birdy.png')
     sprites['player'] = pygame.transform.scale(bird_img, (30, 21)).convert_alpha()
-    sprites['main'] = pygame.image.load('gallery/sprites/flappy-bird.png')
+    # sprites['main'] = pygame.image.load('gallery/sprites/flappy-bird.png')
     
     while True:
         homescreen() 
