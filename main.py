@@ -8,11 +8,12 @@ width = 289
 height = 511
 framepersecond = 32
 
+pygame.init()
+
 # Screen and buttons
 screen = pygame.display.set_mode((width, height))
 background = pygame.transform.scale(pygame.image.load("gallery/sprites/background.jpeg"), (width, height))
 play_button = pygame.transform.scale(pygame.image.load("buttons/play.png"), (150, 70))
-<<<<<<< HEAD
 option_button = pygame.transform.scale(pygame.image.load("buttons/options.png"), (120, 60))
 quit_button = pygame.transform.scale(pygame.image.load("buttons/exit.png"), (120, 60))
 home_button = pygame.transform.scale(pygame.image.load("buttons/icon_home.png"), (45, 45))
@@ -21,18 +22,14 @@ home_button = pygame.transform.scale(pygame.image.load("buttons/icon_home.png"),
 play_bgm = True
 play_sfx = True
 
-player = pygame.transform.scale(pygame.image.load("player.png"), (32, 32)) # <-- placeholder
+# BGM
+mixer.music.load('Sound/bgm.wav')
+mixer.music.play(-1)
 
-
-
-=======
-option_button = pygame.transform.scale(pygame.image.load("buttons/options.png"), (100, 60))
-quit_button = pygame.transform.scale(pygame.image.load("buttons/icon_x.png"), (57, 57))
 player = pygame.transform.scale(pygame.image.load("gallery/sprites/player.png"), (32, 32)) # <-- placeholder
+groundY = height * 0.9
 sprites = {}
 audio = {}
->>>>>>> 08ea03dbf55835cb5dfb0d66ce07df6f2e3cd06d
-groundY = height * 0.9
 
 def homescreen():
     while True:
@@ -123,8 +120,10 @@ def optionscreen():
                     return
                 if mouse_pos[0] in range(130, 180) and mouse_pos[1] in range(210, 240):
                     play_bgm = True
+                    mixer.music.play(-1)
                 if mouse_pos[0] in range(200, 260) and mouse_pos[1] in range(210, 240):
                     play_bgm = False
+                    mixer.music.stop()
                 if mouse_pos[0] in range(130, 180) and mouse_pos[1] in range(270, 300):
                     play_sfx = True
                 if mouse_pos[0] in range(200, 260) and mouse_pos[1] in range(270, 300):
