@@ -203,6 +203,7 @@ def creditscreen():
         y += 1
         pygame.time.wait(10)
 
+        if y == 1000: y = 0
 
 def gamescreen():
     
