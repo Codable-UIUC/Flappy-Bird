@@ -250,7 +250,7 @@ def gamescreen():
                 pygame.quit()
                 sys.exit()
 
-            if event.type == pygame.MOUSEBUTTONUP:
+            if event.type == pygame.MOUSEBUTTONUP or (event.type == KEYDOWN and event.key == K_SPACE):
                 if playery > 0:
                     playerVelY = playerFlapVel
                     playerFlapped = True
